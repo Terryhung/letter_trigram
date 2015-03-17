@@ -1,16 +1,6 @@
 import sys
 import re
-
-testfile_name = sys.argv[1]
-outputfile_name = sys.argv[2]
-
-
-def read_data(filename, data_list):
-    testfile = open(filename, 'r')
-    for i in testfile:
-        data_list.append(i.strip())
-    testfile.close()
-    return data_list
+import numpy as np
 
 
 class trigram:
@@ -44,7 +34,32 @@ class trigram:
         return self.count_element(_list)
 
 
-class build_dic(trigram):
+class _dic(trigram):
     def result(self):
         _list = self.to_trigrams(self.add_hash(self.tweet), self._list)
         return self.count_element(_list).keys()
+
+
+def read_data(filename):
+    data_list = []
+    testfile = open(filename, 'r')
+    for i in testfile:
+        data_list.append(i.strip())
+    testfile.close()
+    return data_list
+
+
+def build_dic(tweets, filename):
+    _list = []
+    for tweet in tweets:
+        _list = _list + _dic(tweet).result()
+        _list = list(set(_list))
+    np.save(filename, np.asarray(_list))
+
+if __name__ == "__main__":
+    if len(sys.argv) < 3:
+        print "Usage: python trigram.py file_name output_file_name"
+        sys.exit()
+    testfile_name = sys.argv[1]
+    outputfile_name = sys.argv[2]
+    build_dic(read_data(testfile_name), outputfile_name)
