@@ -42,3 +42,9 @@ class trigram:
     def result(self):
         _list = self.to_trigrams(self.add_hash(self.tweet), self._list)
         return self.count_element(_list)
+
+
+class build_dic(trigram):
+    def result(self):
+        _list = self.to_trigrams(self.add_hash(self.tweet), self._list)
+        return self.count_element(_list).keys()
