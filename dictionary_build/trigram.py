@@ -11,8 +11,7 @@ class trigram:
     def add_hash(self, tweet):
         # claen tweet by reg
         tweet = re.findall(u'\w+\d*', tweet)
-        tweet = map(lambda x: "#"+x+"#", tweet)
-        return tweet
+        return map(lambda x: "#"+x+"#", tweet)
 
     def to_trigram(self, hash_tweet, _list):
         for cut in range(0, len(hash_tweet)-2):
@@ -26,8 +25,7 @@ class trigram:
         return _list
 
     def count_element(self, _list):
-        result_dict = dict([(i, _list.count(i)) for i in set(_list)])
-        return result_dict
+        return dict([(i, _list.count(i)) for i in set(_list)])
 
     def result(self):
         _list = self.to_trigrams(self.add_hash(self.tweet), self._list)
@@ -43,9 +41,9 @@ class _dic(trigram):
 def read_data(filename):
     data_list = []
     testfile = open(filename, 'r')
-    for i in testfile:
-        data_list.append(i.strip())
-    testfile.close()
+    with open(filename, "r") as testfile:
+        for i in testfile:
+            data_list.append(i.strip())
     return data_list
 
 
